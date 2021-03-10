@@ -1,7 +1,7 @@
 package io.github.batetolast1.springboot2.controller;
 
 import io.github.batetolast1.springboot2.domain.Anime;
-import io.github.batetolast1.springboot2.repository.AnimeRepository;
+import io.github.batetolast1.springboot2.service.AnimeService;
 import io.github.batetolast1.springboot2.util.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,33 +19,38 @@ import java.util.List;
 public class AnimeController {
 
     private final Utils utils;
-    private final AnimeRepository animeRepository;
+    private final AnimeService animeService;
 
-    @GetMapping
+    @GetMapping("/find")
     public ResponseEntity<List<Anime>> listAll() {
         log.info(utils.formatLocalDateTime(LocalDateTime.now()));
-        return ResponseEntity.ok(animeRepository.listAll());
+        return ResponseEntity.ok(animeService.listAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Anime> findById(@PathVariable int id) {
-        return ResponseEntity.ok(animeRepository.findById(id));
+    @GetMapping(value = "/find", params = "id")
+    public ResponseEntity<Anime> findById(int id) {
+        return ResponseEntity.ok(animeService.findById(id));
     }
 
-    @PostMapping()
+    @GetMapping(value = "/find", params = "name")
+    public ResponseEntity<List<Anime>> findByName(String name) {
+        return ResponseEntity.ok(animeService.findByName(name));
+    }
+
+    @PostMapping("/save")
     public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        return ResponseEntity.ok(animeRepository.save(anime));
+        return ResponseEntity.ok(animeService.save(anime));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id) {
-        animeRepository.delete(id);
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> delete(@RequestParam int id) {
+        animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<Void> update(@RequestBody Anime anime) {
-        animeRepository.update(anime);
+        animeService.update(anime);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
