@@ -1,6 +1,7 @@
 package io.github.batetolast1.springboot2.controller;
 
-import io.github.batetolast1.springboot2.domain.Anime;
+import io.github.batetolast1.springboot2.dto.AnimeDTO;
+import io.github.batetolast1.springboot2.mapper.AnimeMapper;
 import io.github.batetolast1.springboot2.service.AnimeService;
 import io.github.batetolast1.springboot2.util.Utils;
 import lombok.RequiredArgsConstructor;
@@ -20,37 +21,38 @@ public class AnimeController {
 
     private final Utils utils;
     private final AnimeService animeService;
+    private final AnimeMapper animeMapper;
 
     @GetMapping("/find")
-    public ResponseEntity<List<Anime>> listAll() {
+    public ResponseEntity<List<AnimeDTO>> listAll() {
         log.info(utils.formatLocalDateTime(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.listAll());
+        return ResponseEntity.ok(animeMapper.mapToAnimeDTOsList(animeService.listAll()));
     }
 
     @GetMapping(value = "/find", params = "id")
-    public ResponseEntity<Anime> findById(int id) {
-        return ResponseEntity.ok(animeService.findById(id));
+    public ResponseEntity<AnimeDTO> findById(@RequestParam Long id) {
+        return ResponseEntity.ok(animeMapper.mapToAnimeDTO(animeService.findById(id)));
     }
 
     @GetMapping(value = "/find", params = "name")
-    public ResponseEntity<List<Anime>> findByName(String name) {
-        return ResponseEntity.ok(animeService.findByName(name));
+    public ResponseEntity<List<AnimeDTO>> findByName(@RequestParam String name) {
+        return ResponseEntity.ok(animeMapper.mapToAnimeDTOsList(animeService.findByName(name)));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        return ResponseEntity.ok(animeService.save(anime));
+    public ResponseEntity<AnimeDTO> save(@RequestBody AnimeDTO animeDTO) {
+        return ResponseEntity.ok(animeMapper.mapToAnimeDTO(animeService.save(animeMapper.mapToAnime(animeDTO))));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete(@RequestParam int id) {
+    public ResponseEntity<Void> delete(@RequestParam Long id) {
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Void> update(@RequestBody Anime anime) {
-        animeService.update(anime);
+    public ResponseEntity<Void> update(@RequestBody AnimeDTO animeDTO) {
+        animeService.update(animeMapper.mapToAnime(animeDTO));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
