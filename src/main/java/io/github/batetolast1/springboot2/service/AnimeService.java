@@ -5,6 +5,7 @@ import io.github.batetolast1.springboot2.repository.AnimeRepository;
 import io.github.batetolast1.springboot2.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,7 @@ public class AnimeService {
         return utils.findAnimeOrThrowNotFound(id, animeRepository);
     }
 
+    @Transactional
     public Anime save(Anime anime) {
         anime.setPublisher(publisherService.findById(anime.getPublisher().getId()));
         anime.setCovers(
