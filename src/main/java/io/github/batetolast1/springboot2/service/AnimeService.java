@@ -24,7 +24,7 @@ public class AnimeService {
     }
 
     public List<Anime> findByName(String name) {
-        return animeRepository.findByName(name);
+        return animeRepository.findByNameContaining(name);
     }
 
     public Anime findById(Long id) {

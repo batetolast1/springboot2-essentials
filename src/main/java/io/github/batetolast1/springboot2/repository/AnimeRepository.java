@@ -19,4 +19,7 @@ public interface AnimeRepository extends JpaRepository<Anime, Long> {
 
     @EntityGraph(attributePaths = {"publisher", "covers"})
     List<Anime> findByName(String name);
+
+    @EntityGraph(attributePaths = {"publisher", "covers"})
+    List<Anime> findByNameContaining(String name);
 }
