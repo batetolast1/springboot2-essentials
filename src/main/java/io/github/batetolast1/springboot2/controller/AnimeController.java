@@ -1,11 +1,14 @@
 package io.github.batetolast1.springboot2.controller;
 
+import io.github.batetolast1.springboot2.domain.Anime;
 import io.github.batetolast1.springboot2.dto.AnimeDTO;
 import io.github.batetolast1.springboot2.mapper.AnimeMapper;
 import io.github.batetolast1.springboot2.service.AnimeService;
 import io.github.batetolast1.springboot2.util.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,23 @@ public class AnimeController {
     public ResponseEntity<List<AnimeDTO>> listAll() {
         log.info(utils.formatLocalDateTime(LocalDateTime.now()));
         return ResponseEntity.ok(animeMapper.mapToAnimeDTOsList(animeService.listAll()));
+    }
+
+    @GetMapping("/findPageable")
+    public ResponseEntity<Page<Anime>> listAll(Pageable pageable) {
+        return ResponseEntity.ok(animeService.listAll(pageable));
+    }
+
+    @GetMapping("/findPageableSingleQueryForAllChildEntities")
+    public ResponseEntity<List<AnimeDTO>> listAllPageableSingleQueryForAllChildEntities(Pageable pageable) {
+        return ResponseEntity.ok(
+                animeMapper.mapToAnimeDTOsList(animeService.listAllPageableSingleQueryForAllChildEntities(pageable)));
+    }
+
+    @GetMapping("/findPageableSingleQueryPerEachChildEntity")
+    public ResponseEntity<List<AnimeDTO>> listAllPageableSingleQueryPerEachChildEntity(Pageable pageable) {
+        return ResponseEntity.ok(
+                animeMapper.mapToAnimeDTOsList(animeService.listAllPageableSingleQueryPerEachChildEntity(pageable)));
     }
 
     @GetMapping(value = "/find", params = "id")

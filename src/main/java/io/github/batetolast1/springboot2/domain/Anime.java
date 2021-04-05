@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedEntityGraph(name = "graph.Anime.allAttributes", includeAllAttributes = true)
 public class Anime {
 
     @Id
@@ -26,6 +27,6 @@ public class Anime {
     @Convert(converter = AnimeTypeConverter.class)
     private AnimeType type;
     @OneToMany
-    private Set<Cover> covers;
+    private List<Cover> covers;
     private LocalDate releaseDate;
 }
