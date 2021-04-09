@@ -35,8 +35,5 @@ public interface AnimeRepository extends JpaRepository<Anime, Long>, CustomAnime
     Optional<Anime> findById(Long id);
 
     @EntityGraph(value = "graph.Anime.allAttributes")
-    List<Anime> findByName(String name);
-
-    @EntityGraph(value = "graph.Anime.allAttributes")
     List<Anime> findByNameContaining(String name);
 }
