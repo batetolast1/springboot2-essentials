@@ -6,7 +6,8 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(uses = {PublisherMapper.class, CoverMapper.class})
+@Mapper(componentModel = "spring",
+        uses = {PublisherMapper.class, CoverMapper.class})
 public interface AnimeMapper {
 
     Anime mapToAnime(AnimeDTO animeDTO);
