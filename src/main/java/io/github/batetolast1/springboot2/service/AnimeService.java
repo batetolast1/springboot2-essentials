@@ -76,14 +76,18 @@ public class AnimeService {
 
     @Transactional
     public Anime save(Anime anime) {
-        anime.setPublisher(publisherService.findById(anime.getPublisher().getId()));
+        if (anime.getPublisher() != null) {
+            anime.setPublisher(publisherService.findById(anime.getPublisher().getId()));
+        }
 
-        anime.setCovers(
-                anime.getCovers()
-                        .stream()
-                        .map(cover -> coverService.findById(cover.getId()))
-                        .collect(Collectors.toList())
-        );
+        if (anime.getCovers() != null) {
+            anime.setCovers(
+                    anime.getCovers()
+                            .stream()
+                            .map(cover -> coverService.findById(cover.getId()))
+                            .collect(Collectors.toList())
+            );
+        }
 
         return animeRepository.save(anime);
     }

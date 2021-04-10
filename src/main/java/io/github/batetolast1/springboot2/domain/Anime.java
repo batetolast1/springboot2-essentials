@@ -2,6 +2,7 @@ package io.github.batetolast1.springboot2.domain;
 
 import io.github.batetolast1.springboot2.converter.AnimeTypeConverter;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
