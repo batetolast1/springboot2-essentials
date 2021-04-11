@@ -4,7 +4,6 @@ import io.github.batetolast1.springboot2.domain.Anime;
 import io.github.batetolast1.springboot2.dto.AnimeDTO;
 import io.github.batetolast1.springboot2.mapper.AnimeMapper;
 import io.github.batetolast1.springboot2.service.AnimeService;
-import io.github.batetolast1.springboot2.util.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,13 +21,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnimeController {
 
-    private final Utils utils;
     private final AnimeService animeService;
     private final AnimeMapper animeMapper;
 
     @GetMapping("/find")
     public ResponseEntity<List<AnimeDTO>> listAll() {
-        log.info(utils.formatLocalDateTime(LocalDateTime.now()));
         return ResponseEntity.ok(animeMapper.mapToAnimeDTOsList(animeService.listAll()));
     }
 

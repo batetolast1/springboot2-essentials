@@ -15,6 +15,11 @@ spring:
       hibernate:
         generate_statistics: true
         format_sql: true
+#        [org.hibernate.SQL_SLOW] LOG
+#        session:
+#          events:
+#            log:
+#              LOG_QUERIES_SLOWER_THAN_MS: 20
 
 logging:
   level:

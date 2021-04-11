@@ -9,15 +9,8 @@ import io.github.batetolast1.springboot2.repository.CoverRepository;
 import io.github.batetolast1.springboot2.repository.PublisherRepository;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 @Component
 public class Utils {
-
-    public String formatLocalDateTime(LocalDateTime localDateTime) {
-        return DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(localDateTime);
-    }
 
     public Anime findAnimeOrThrowNotFound(Long id, AnimeRepository animeRepository) {
         return animeRepository.findById(id)
